@@ -22,6 +22,7 @@ os: Windows Server 2012 R2
 # scripts that run after cloning repository
 install:
   - cmd: git submodule update --init
+  - cmd: nuget restore
   - ps:  .\prebuild.ps1
 
 #---------------------------------#
