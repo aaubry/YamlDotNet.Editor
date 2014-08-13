@@ -6,8 +6,11 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{69EE9636-55BA-49C2-827E-D5684221C345}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		appveyor.yml = appveyor.yml
+		BuildUtils\build_utils.ps1 = BuildUtils\build_utils.ps1
 		CommonAssemblyInfo.cs = CommonAssemblyInfo.cs
 		LICENSE = LICENSE
+		prebuild.ps1 = prebuild.ps1
 		README.md = README.md
 	EndProjectSection
 EndProject
