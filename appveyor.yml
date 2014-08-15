@@ -34,3 +34,13 @@ platform: Any CPU
 
 # build Configuration, i.e. Debug, Release, etc.
 configuration: Release
+
+
+#---------------------------------#
+#      artifacts configuration    #
+#---------------------------------#
+
+artifacts:
+
+  - path: YamlDotNetEditor\bin\Release\YamlDotNetEditor.vsix
+    name: VSIX Package
