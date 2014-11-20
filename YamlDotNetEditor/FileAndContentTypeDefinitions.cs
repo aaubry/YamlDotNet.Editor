@@ -41,6 +41,11 @@ namespace YamlDotNetEditor
 		[FileExtension(".yml")]
 		[ContentType("yaml")]
 		internal static FileExtensionToContentTypeDefinition hiddenYMLFileExtensionDefinition;
+
+        [Export]
+        [FileExtension(".raml")]
+        [ContentType("yaml")]
+        internal static FileExtensionToContentTypeDefinition hiddenRAMLFileExtensionDefinition;
 #pragma warning restore 0649
 	}
 }
