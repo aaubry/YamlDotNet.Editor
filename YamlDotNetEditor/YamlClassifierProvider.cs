@@ -39,7 +39,8 @@ namespace YamlDotNetEditor
 
 		public IClassifier GetClassifier(ITextBuffer buffer)
 		{
-			return buffer.Properties.GetOrCreateSingletonProperty<YamlClassifier>(delegate { return new YamlClassifier(ClassificationRegistry); });
+			var parser = buffer.Properties.GetOrCreateSingletonProperty<TextBufferParser>(() => new TextBufferParser(buffer));
+			return buffer.Properties.GetOrCreateSingletonProperty<YamlClassifier>(() => new YamlClassifier(ClassificationRegistry, parser));
 		}
 	}
 }

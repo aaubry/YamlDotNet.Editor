@@ -107,6 +107,8 @@
     <Compile Include="CommandHandlers\ICommandHandler.cs" />
     <Compile Include="CommandHandlers\SelectionModifierCommandHandler.cs" />
     <Compile Include="FileAndContentTypeDefinitions.cs" />
+    <Compile Include="InvalidToken.cs" />
+    <Compile Include="TextBufferParser.cs" />
     <Compile Include="YamlClassifier.cs" />
     <Compile Include="EditorFormats.cs" />
     <Compile Include="CommandService.cs" />
