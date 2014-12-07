@@ -27,7 +27,6 @@ namespace YamlDotNetEditor
 		private readonly ITextBuffer _textBuffer;
 		private Scanner _scanner;
 		private readonly List<Token> _bufferedTokens = new List<Token>();
-		private int _lastBufferedIndex;
 		private int _errorCount;
 		private int _currentTokensVersionNumber;
 
@@ -71,7 +70,6 @@ namespace YamlDotNetEditor
 			{
 				_scanner = new Scanner(new StringReader(textSnapshot.GetText()), skipComments: false);
 				_currentTokensVersionNumber = textSnapshot.Version.VersionNumber;
-				_lastBufferedIndex = -1;
 				_errorCount = 0;
 				_bufferedTokens.Clear();
 
@@ -81,9 +79,24 @@ namespace YamlDotNetEditor
 			return false;
 		}
 
+		public IEnumerable<Token> GetAllTokens()
+		{
+			var currentIndex = 0;
+			ReadWhile((initial, current) => current.Line == initial.Line);
+			while (currentIndex < _bufferedTokens.Count)
+			{
+				yield return _bufferedTokens[currentIndex++];
+
+				if (currentIndex == _bufferedTokens.Count)
+				{
+					ReadWhile((initial, current) => current.Line == initial.Line);
+				}
+			}
+		}
+
 		public IEnumerable<Token> GetTokensBetween(int start, int end)
 		{
-			EnsureReadUntil(end);
+			ReadWhile((initial, current) => current.Index <= end);
 
 			// Dummy token used to perform the binary search
 			var markerToken = new StreamStart(default(Mark), new Mark(start, 1, 1));
@@ -106,9 +119,9 @@ namespace YamlDotNetEditor
 			}
 		}
 
-		private void EnsureReadUntil(int end)
+		private void ReadWhile(Func<Mark, Mark, bool> predicate)
 		{
-			var lastPosition = _bufferedTokens.Count > 0
+			var initialPosition = _bufferedTokens.Count > 0
 				? _bufferedTokens[_bufferedTokens.Count - 1].End
 				: new Mark();
 
@@ -117,13 +130,13 @@ namespace YamlDotNetEditor
 			{
 				try
 				{
-					while (lastPosition.Index <= end && _scanner.MoveNext())
+					var currentPosition = initialPosition;
+					while (predicate(initialPosition, currentPosition) && _scanner.MoveNext())
 					{
 						_bufferedTokens.Add(_scanner.Current);
-						lastPosition = _scanner.Current.End;
-						_lastBufferedIndex = lastPosition.Index;
+						currentPosition = _scanner.Current.End;
 					}
-					return;
+					break;
 				}
 				catch (SyntaxErrorException ex)
 				{
@@ -136,5 +149,4 @@ namespace YamlDotNetEditor
 			}
 		}
 	}
-
 }

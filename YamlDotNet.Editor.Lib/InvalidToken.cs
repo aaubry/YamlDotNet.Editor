@@ -1,9 +1,9 @@
 ﻿using YamlDotNet.Core;
 using YamlDotNet.Core.Tokens;
 
-namespace YamlDotNetEditor
+namespace YamlDotNet.Editor.Lib
 {
-	internal class InvalidToken : Token
+	public class InvalidToken : Token
 	{
 		public InvalidToken(Mark start, Mark end)
 			: base(start, end)
