@@ -26,6 +26,7 @@ using System.IO;
 using System.Linq;
 using YamlDotNet.Core;
 using YamlDotNet.Core.Tokens;
+using YamlDotNet.Editor.Lib;
 
 namespace YamlDotNetEditor
 {

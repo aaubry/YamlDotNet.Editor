@@ -37,6 +37,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="YamlDotNet, Version=3.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\YamlDotNet.3.4.0\lib\net35\YamlDotNet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InvalidToken.cs" />
@@ -45,10 +49,7 @@
     <Compile Include="RegionExtractor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\YamlDotNet\YamlDotNet\YamlDotNet.csproj">
-      <Project>{bf32de1b-6276-4341-b212-f8862adbba7a}</Project>
-      <Name>YamlDotNet</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

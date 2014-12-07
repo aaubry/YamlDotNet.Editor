@@ -1,5 +1,5 @@
 //  This file is part of YamlDotNet - A .NET library for YAML.
-//  Copyright (c) 2008, 2009, 2010, 2011, 2012, 2013, 2014 Antoine Aubry and contributors
+//  Copyright (c) Antoine Aubry and contributors
     
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -70,12 +70,12 @@ namespace YamlDotNetEditor.Tests
 
 		public static Scanner ScannerForResource(string name)
 		{
-			return new Scanner(Yaml.StreamFrom(name));
+			return new Scanner(Yaml.StreamFrom(name), skipComments: false);
 		}
 
 		public static Scanner ScannerForText(string yamlText)
 		{
-			return new Scanner(ReaderForText(yamlText));
+			return new Scanner(ReaderForText(yamlText), skipComments: false);
 		}
 
 		public static StringReader ReaderForText(string yamlText)

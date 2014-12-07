@@ -25,6 +25,7 @@ using Microsoft.VisualStudio.Text.Classification;
 using System;
 using System.Collections.Generic;
 using YamlDotNet.Core.Tokens;
+using YamlDotNet.Editor.Lib;
 
 namespace YamlDotNetEditor
 {
