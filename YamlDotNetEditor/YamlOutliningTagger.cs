@@ -1,14 +1,29 @@
-﻿using System;
+﻿//  This file is part of YamlDotNet - A .NET library for YAML.
+//  Copyright (c) Antoine Aubry and contributors
+
+//  Permission is hereby granted, free of charge, to any person obtaining a copy of
+//  this software and associated documentation files (the "Software"), to deal in
+//  the Software without restriction, including without limitation the rights to
+//  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+//  of the Software, and to permit persons to whom the Software is furnished to do
+//  so, subject to the following conditions:
+
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+
+using Microsoft.VisualStudio.Text;
+using Microsoft.VisualStudio.Text.Tagging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.ComponentModel.Composition;
-using Microsoft.VisualStudio.Text.Outlining;
-using Microsoft.VisualStudio.Text.Tagging;
-using Microsoft.VisualStudio.Utilities;
-using Microsoft.VisualStudio.Text;
-using YamlDotNet.Core.Tokens;
-using YamlDotNet.Core;
 using YamlDotNet.Editor.Lib;
 
 namespace YamlDotNetEditor
@@ -33,6 +48,8 @@ namespace YamlDotNetEditor
 			_regions = regionExtractor.GetRegions(_parser.GetAllTokens()).ToList();
 		}
 
+		private const string Ellipsis = "...";
+
 		public IEnumerable<ITagSpan<IOutliningRegionTag>> GetTags(NormalizedSnapshotSpanCollection spans)
 		{
 			var start = spans[0].Start.Position;
@@ -47,7 +64,7 @@ namespace YamlDotNetEditor
 					var span = new SnapshotSpan(startPoint, endLine.End);
 					yield return new TagSpan<IOutliningRegionTag>(
 						span,
-						new OutliningRegionTag(false, false, region.Ellipsis, region.Tooltip)
+						new OutliningRegionTag(false, false, Ellipsis, _textBuffer.CurrentSnapshot.GetText(span))
 					);
 				}
 			}

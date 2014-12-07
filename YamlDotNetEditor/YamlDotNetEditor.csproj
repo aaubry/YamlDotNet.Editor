@@ -94,6 +94,10 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
+    <Reference Include="YamlDotNet, Version=3.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\YamlDotNet.3.4.0\lib\net35\YamlDotNet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandHandlerDispatcher.cs" />
@@ -151,10 +155,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\YamlDotNet\YamlDotNet\YamlDotNet.csproj">
-      <Project>{bf32de1b-6276-4341-b212-f8862adbba7a}</Project>
-      <Name>YamlDotNet</Name>
-    </ProjectReference>
     <ProjectReference Include="..\YamlDotNet.Editor.Lib\YamlDotNet.Editor.Lib.csproj">
       <Project>{ef07caec-1d45-4f05-9b54-691a4fe05aaa}</Project>
       <Name>YamlDotNet.Editor.Lib</Name>
