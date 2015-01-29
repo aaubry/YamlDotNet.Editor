@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+using System.Diagnostics;
 using YamlDotNet.Core;
 
 namespace YamlDotNet.Editor.Lib
@@ -30,6 +31,8 @@ namespace YamlDotNet.Editor.Lib
 
 		public Region(Mark start, Mark end)
 		{
+			Debug.Assert(start.Line < end.Line || (start.Line == end.Line && start.Column <= end.Column));
+
 			Start = start;
 			End = end;
 		}
