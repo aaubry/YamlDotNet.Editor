@@ -48,8 +48,6 @@ namespace YamlDotNetEditor
 			_regions = regionExtractor.GetRegions(_parser.GetAllTokens()).ToList();
 		}
 
-		private const string Ellipsis = "...";
-
 		public IEnumerable<ITagSpan<IOutliningRegionTag>> GetTags(NormalizedSnapshotSpanCollection spans)
 		{
 			var start = spans[0].Start.Position;
@@ -62,9 +60,12 @@ namespace YamlDotNetEditor
 					var endLine = _textBuffer.CurrentSnapshot.GetLineFromLineNumber(region.End.Line - 2 /* GetLineFromLineNumber is zero-based, and we want to subtract 1 from the current line, because the token ends where the next one starts */);
 					var startPoint = new SnapshotPoint(_textBuffer.CurrentSnapshot, region.Start.Index);
 					var span = new SnapshotSpan(startPoint, endLine.End);
+
+					var text = _textBuffer.CurrentSnapshot.GetText(span);
+					var ellipsis = text.Split(new[] { '\r', '\n' }, 2)[0] + " ...";
 					yield return new TagSpan<IOutliningRegionTag>(
 						span,
-						new OutliningRegionTag(false, false, Ellipsis, _textBuffer.CurrentSnapshot.GetText(span))
+						new OutliningRegionTag(false, false, ellipsis, text)
 					);
 				}
 			}
