@@ -24,6 +24,7 @@ using Microsoft.VisualStudio.Text.Tagging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using YamlDotNet.Core.Tokens;
 using YamlDotNet.Editor.Lib;
 
 namespace YamlDotNetEditor
@@ -32,36 +33,72 @@ namespace YamlDotNetEditor
 	{
 		private readonly ITextBuffer _textBuffer;
 		private readonly TextBufferParser _parser;
+		private readonly Dictionary<string, int> _anchors = new Dictionary<string, int>();
 
 		public ErrorTagger(ITextBuffer textBuffer, TextBufferParser parser)
 		{
 			_textBuffer = textBuffer;
 			_parser = parser;
-			_parser.ParseTreeChanged += (s, e) => OnTagsChanged(e);
+			_parser.ParseTreeChanged += (s, e) => { Reparse(); OnTagsChanged(e); };
+			Reparse();
+		}
+
+		private void Reparse()
+		{
+			_anchors.Clear();
+
+			foreach (var token in _parser.GetAllTokens().OfType<Anchor>())
+			{
+				int count;
+				_anchors.TryGetValue(token.Value, out count);
+				_anchors[token.Value] = count + 1;
+			}
 		}
 
 		public IEnumerable<ITagSpan<IErrorTag>> GetTags(NormalizedSnapshotSpanCollection spans)
 		{
-			var invalidTokens = spans
-				.SelectMany(span => _parser
-					.GetTokensBetween(span.Start.Position, span.End.Position)
-					.OfType<InvalidToken>()
-					.Select(token => new { span, token }))
-				.GroupBy(p => new { p.token.Start, p.token.End, p.token.Exception.Message }, (k, t) => t.First());
+			var alreadyReportedSyntaxErrors = new HashSet<string>();
 
-			foreach (var pair in invalidTokens)
+			foreach (var span in spans)
 			{
-				var start = Math.Max(pair.token.Start.Index, pair.span.Start.Position);
-				var end = Math.Min(pair.token.End.Index, pair.span.End.Position + 1);
+				foreach (var token in _parser.GetTokensBetween(span.Start.Position, span.End.Position))
+				{
+					var syntaxError = token as SyntaxErrorToken;
+					if (syntaxError != null && alreadyReportedSyntaxErrors.Add(syntaxError.Exception.Message))
+					{
+						yield return CreateErrorTag(span, token, "syntax error", syntaxError.Exception.Message);
+						continue;
+					}
 
-				yield return new TagSpan<ErrorTag>(
-					new SnapshotSpan(
-						pair.span.Snapshot,
-						new Span(start, end - start)
-					),
-					new ErrorTag("Syntax Error", pair.token.Exception.Message)
-				);
+					var anchor = token as Anchor;
+					if (anchor != null && _anchors[anchor.Value] > 1)
+					{
+						yield return CreateErrorTag(span, token, "syntax error", "Duplicate anchor");
+						continue;
+					}
+
+					var anchorAlias = token as AnchorAlias;
+					if (anchorAlias != null && !_anchors.ContainsKey(anchorAlias.Value))
+					{
+						yield return CreateErrorTag(span, token, "syntax error", "Undefined anchor");
+						continue;
+					}
+				}
 			}
+		}
+
+		private TagSpan<ErrorTag> CreateErrorTag(SnapshotSpan span, Token token, string type, string message)
+		{
+			var start = Math.Max(token.Start.Index, span.Start.Position);
+			var end = Math.Min(token.End.Index, span.End.Position + 1);
+
+			return new TagSpan<ErrorTag>(
+				new SnapshotSpan(
+					span.Snapshot,
+					new Span(start, end - start)
+				),
+				new ErrorTag(type, message)
+			);
 		}
 
 		public event EventHandler<SnapshotSpanEventArgs> TagsChanged;

@@ -104,7 +104,7 @@ namespace YamlDotNetEditor
 				{
 					classificationType = _comment;
 				}
-				else if (currentTokenType == typeof(InvalidToken))
+				else if (currentTokenType == typeof(SyntaxErrorToken))
 				{
 					//classificationType = null;
 				}

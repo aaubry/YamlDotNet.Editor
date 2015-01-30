@@ -43,7 +43,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InvalidToken.cs" />
+    <Compile Include="SyntaxErrorToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Region.cs" />
     <Compile Include="RegionExtractor.cs" />

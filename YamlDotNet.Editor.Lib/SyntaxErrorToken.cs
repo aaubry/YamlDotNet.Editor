@@ -24,11 +24,11 @@ using YamlDotNet.Core.Tokens;
 
 namespace YamlDotNet.Editor.Lib
 {
-	public class InvalidToken : Token
+	public class SyntaxErrorToken : Token
 	{
 		public SyntaxErrorException Exception { get; private set; }
 
-		public InvalidToken(SyntaxErrorException exception, Mark start, Mark end)
+		public SyntaxErrorToken(SyntaxErrorException exception, Mark start, Mark end)
 			: base(start, end)
 		{
 			Exception = exception;
