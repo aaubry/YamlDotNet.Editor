@@ -26,9 +26,12 @@ namespace YamlDotNet.Editor.Lib
 {
 	public class InvalidToken : Token
 	{
-		public InvalidToken(Mark start, Mark end)
+		public SyntaxErrorException Exception { get; private set; }
+
+		public InvalidToken(SyntaxErrorException exception, Mark start, Mark end)
 			: base(start, end)
 		{
+			Exception = exception;
 		}
 	}
 }

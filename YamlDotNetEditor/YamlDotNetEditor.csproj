@@ -106,7 +106,9 @@
     <Compile Include="CommandHandlers\UncommentSelectionCommandHandler.cs" />
     <Compile Include="CommandHandlers\ICommandHandler.cs" />
     <Compile Include="CommandHandlers\SelectionModifierCommandHandler.cs" />
+    <Compile Include="ErrorTagger.cs" />
     <Compile Include="FileAndContentTypeDefinitions.cs" />
+    <Compile Include="ErrorTaggerProvider.cs" />
     <Compile Include="TextBufferParser.cs" />
     <Compile Include="Classifier.cs" />
     <Compile Include="EditorFormats.cs" />

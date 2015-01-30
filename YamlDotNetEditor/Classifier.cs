@@ -39,7 +39,6 @@ namespace YamlDotNetEditor
 		private readonly IClassificationType _tag;
 		private readonly IClassificationType _symbol;
 		private readonly IClassificationType _directive;
-		private readonly IClassificationType _invalid;
 
 		private readonly TextBufferParser _parser;
 
@@ -53,7 +52,6 @@ namespace YamlDotNetEditor
 			_tag = registry.GetClassificationType("YamlTag");
 			_symbol = registry.GetClassificationType("YamlSymbol");
 			_directive = registry.GetClassificationType("YamlDirective");
-			_invalid = registry.GetClassificationType("YamlInvalid");
 
 			_parser = parser;
 			_parser.ParseTreeChanged += (s, e) => OnClassificationChanged(new ClassificationChangedEventArgs(e.Span));
@@ -108,7 +106,7 @@ namespace YamlDotNetEditor
 				}
 				else if (currentTokenType == typeof(InvalidToken))
 				{
-					//classificationType = _invalid;
+					//classificationType = null;
 				}
 				else if (token.End.Index > token.Start.Index)
 				{

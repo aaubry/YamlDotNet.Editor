@@ -166,7 +166,7 @@ namespace YamlDotNetEditor
 						? new Mark(ex.End.Index + 1, ex.End.Line, ex.End.Column)
 						: ex.End;
 
-					_bufferedTokens.Add(new InvalidToken(ex.Start, errorEnd));
+					_bufferedTokens.Add(new InvalidToken(ex, ex.Start, errorEnd));
 				}
 			}
 		}

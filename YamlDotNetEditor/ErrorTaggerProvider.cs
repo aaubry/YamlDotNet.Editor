@@ -19,40 +19,22 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-using Microsoft.VisualStudio.Text.Classification;
+using Microsoft.VisualStudio.Text;
+using Microsoft.VisualStudio.Text.Tagging;
 using Microsoft.VisualStudio.Utilities;
 using System.ComponentModel.Composition;
 
 namespace YamlDotNetEditor
 {
-	internal static class ClassificationDefinitions
+	[Export(typeof(ITaggerProvider))]
+	[TagType(typeof(IErrorTag))]
+	[ContentType("yaml")]
+	internal sealed class ErrorTaggerProvider : ITaggerProvider
 	{
-		[Export(typeof(ClassificationTypeDefinition))]
-		[Name("YamlAnchor")]
-		internal static ClassificationTypeDefinition YamlAnchorType = null;
-
-		[Export(typeof(ClassificationTypeDefinition))]
-		[Name("YamlAlias")]
-		internal static ClassificationTypeDefinition YamlAliasType = null;
-
-		[Export(typeof(ClassificationTypeDefinition))]
-		[Name("YamlKey")]
-		internal static ClassificationTypeDefinition YamlKeyType = null;
-
-		[Export(typeof(ClassificationTypeDefinition))]
-		[Name("YamlValue")]
-		internal static ClassificationTypeDefinition YamlValueType = null;
-
-		[Export(typeof(ClassificationTypeDefinition))]
-		[Name("YamlTag")]
-		internal static ClassificationTypeDefinition YamlTagType = null;
-
-		[Export(typeof(ClassificationTypeDefinition))]
-		[Name("YamlSymbol")]
-		internal static ClassificationTypeDefinition YamlSymbolType = null;
-
-		[Export(typeof(ClassificationTypeDefinition))]
-		[Name("YamlDirective")]
-		internal static ClassificationTypeDefinition YamlDirectiveType = null;
+		public ITagger<T> CreateTagger<T>(ITextBuffer buffer) where T : ITag
+		{
+			var parser = buffer.Properties.GetOrCreateSingletonProperty<TextBufferParser>(() => new TextBufferParser(buffer));
+			return buffer.Properties.GetOrCreateSingletonProperty<ITagger<T>>(() => (ITagger<T>)new ErrorTagger(buffer, parser));
+		}
 	}
 }
