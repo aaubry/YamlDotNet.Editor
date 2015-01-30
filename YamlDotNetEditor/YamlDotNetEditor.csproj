@@ -108,14 +108,14 @@
     <Compile Include="CommandHandlers\SelectionModifierCommandHandler.cs" />
     <Compile Include="FileAndContentTypeDefinitions.cs" />
     <Compile Include="TextBufferParser.cs" />
-    <Compile Include="YamlClassifier.cs" />
+    <Compile Include="Classifier.cs" />
     <Compile Include="EditorFormats.cs" />
     <Compile Include="CommandService.cs" />
-    <Compile Include="YamlClassificationDefinitions.cs" />
-    <Compile Include="YamlClassifierProvider.cs" />
+    <Compile Include="ClassificationDefinitions.cs" />
+    <Compile Include="ClassifierProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="YamlOutliningTagger.cs" />
-    <Compile Include="YamlOutliningTaggerProvider.cs" />
+    <Compile Include="OutliningTagger.cs" />
+    <Compile Include="OutliningTaggerProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="LICENSE">

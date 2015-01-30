@@ -28,13 +28,13 @@ using YamlDotNet.Editor.Lib;
 
 namespace YamlDotNetEditor
 {
-	internal class YamlOutliningTagger : ITagger<IOutliningRegionTag>
+	internal class OutliningTagger : ITagger<IOutliningRegionTag>
 	{
 		private readonly ITextBuffer _textBuffer;
 		private readonly TextBufferParser _parser;
 		private List<Region> _regions;
 
-		public YamlOutliningTagger(ITextBuffer textBuffer, TextBufferParser parser)
+		public OutliningTagger(ITextBuffer textBuffer, TextBufferParser parser)
 		{
 			_textBuffer = textBuffer;
 			_parser = parser;

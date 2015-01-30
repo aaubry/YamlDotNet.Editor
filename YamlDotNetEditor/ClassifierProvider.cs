@@ -20,21 +20,27 @@
 //  SOFTWARE.
 
 using Microsoft.VisualStudio.Text;
-using Microsoft.VisualStudio.Text.Tagging;
+using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Utilities;
 using System.ComponentModel.Composition;
 
 namespace YamlDotNetEditor
 {
-	[Export(typeof(ITaggerProvider))]
-	[TagType(typeof(IOutliningRegionTag))]
+	[Export(typeof(IClassifierProvider))]
 	[ContentType("yaml")]
-	internal sealed class YamlOutliningTaggerProvider : ITaggerProvider
+	internal class ClassifierProvider : IClassifierProvider
 	{
-		public ITagger<T> CreateTagger<T>(ITextBuffer buffer) where T : ITag
+		/// <summary>
+		/// Import the classification registry to be used for getting a reference
+		/// to the custom classification type later.
+		/// </summary>
+		[Import]
+		internal IClassificationTypeRegistryService ClassificationRegistry = null; // Set via MEF
+
+		public IClassifier GetClassifier(ITextBuffer buffer)
 		{
 			var parser = buffer.Properties.GetOrCreateSingletonProperty<TextBufferParser>(() => new TextBufferParser(buffer));
-			return buffer.Properties.GetOrCreateSingletonProperty<ITagger<T>>(() => (ITagger<T>)new YamlOutliningTagger(buffer, parser));
+			return buffer.Properties.GetOrCreateSingletonProperty<Classifier>(() => new Classifier(ClassificationRegistry, parser));
 		}
 	}
 }

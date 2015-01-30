@@ -29,7 +29,7 @@ using YamlDotNet.Editor.Lib;
 
 namespace YamlDotNetEditor
 {
-	internal class YamlClassifier : IClassifier
+	internal class Classifier : IClassifier
 	{
 		private readonly IClassificationType _comment;
 		private readonly IClassificationType _anchor;
@@ -43,7 +43,7 @@ namespace YamlDotNetEditor
 
 		private readonly TextBufferParser _parser;
 
-		internal YamlClassifier(IClassificationTypeRegistryService registry, TextBufferParser parser)
+		internal Classifier(IClassificationTypeRegistryService registry, TextBufferParser parser)
 		{
 			_comment = registry.GetClassificationType(PredefinedClassificationTypeNames.Comment);
 			_anchor = registry.GetClassificationType("YamlAnchor");
@@ -108,7 +108,7 @@ namespace YamlDotNetEditor
 				}
 				else if (currentTokenType == typeof(InvalidToken))
 				{
-					classificationType = _invalid;
+					//classificationType = _invalid;
 				}
 				else if (token.End.Index > token.Start.Index)
 				{
