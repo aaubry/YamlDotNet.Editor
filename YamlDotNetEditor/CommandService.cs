@@ -49,7 +49,8 @@ namespace YamlDotNetEditor
 			var dispatcher = new CommandHandlerDispatcher(textViewAdapter, textView, TextUndoHistoryRegistry,
 				new CommentSelectionCommandHandler(),
 				new UncommentSelectionCommandHandler(),
-				new FormatDocumentCommandHandler()
+				new FormatDocumentCommandHandler(),
+                new TabCommandHandler()
 			);
 
 			textView.Properties.AddProperty(typeof(CommandHandlerDispatcher), dispatcher);
