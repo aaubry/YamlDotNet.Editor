@@ -25,6 +25,9 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(DevEnvDir)\devenv.exe</StartProgram>
+    <StartArguments>/rootsuffix Exp</StartArguments>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -97,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandHandlerDispatcher.cs" />
+    <Compile Include="CommandHandlers\TabCommandHandler .cs" />
     <Compile Include="CommandHandlers\FormatDocumentCommandHandler.cs" />
     <Compile Include="CommandHandlers\CommentSelectionCommandHandler.cs" />
     <Compile Include="CommandHandlers\UncommentSelectionCommandHandler.cs" />
