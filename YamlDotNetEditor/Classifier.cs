@@ -47,8 +47,8 @@ namespace YamlDotNetEditor
 			_comment = registry.GetClassificationType(PredefinedClassificationTypeNames.Comment);
 			_anchor = registry.GetClassificationType("YamlAnchor");
 			_alias = registry.GetClassificationType("YamlAlias");
-			_key = registry.GetClassificationType("YamlKey");
-			_value = registry.GetClassificationType("YamlValue");
+			_key = registry.GetClassificationType(PredefinedClassificationTypeNames.SymbolDefinition);
+			_value = registry.GetClassificationType(PredefinedClassificationTypeNames.String);
 			_tag = registry.GetClassificationType("YamlTag");
 			_symbol = registry.GetClassificationType("YamlSymbol");
 			_directive = registry.GetClassificationType("YamlDirective");
