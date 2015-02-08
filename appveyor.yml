@@ -10,7 +10,7 @@ branches:
   # whitelist
   only:
     - master
-    - appveyor-tests
+    - release
 
 #---------------------------------#
 #    environment configuration    #
