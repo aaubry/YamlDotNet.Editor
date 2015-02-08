@@ -43,4 +43,4 @@ configuration: Release
 
 after_test:
   # Push artifacts and publish the nighly build to http://vsixgallery.com
-  - ps: if ($env:APPVEYOR_REPO_BRANCH -ne "release") { Vsix-PushArtifacts .\YamlDotNetEditor\bin\*\*.vsix | Vsix-PublishToGallery }
+  - ps: Vsix-PushArtifacts .\YamlDotNetEditor\bin\*\*.vsix | ? { $env:APPVEYOR_REPO_BRANCH -ne "release" } | Vsix-PublishToGallery
