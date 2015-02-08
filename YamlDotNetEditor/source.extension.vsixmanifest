@@ -2,9 +2,14 @@
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
 	<Metadata>
 		<Identity Id="YamlDotNetEditor..074a7b74-655b-409c-b5ac-a028f12d6e89" Version="1.3" Language="en-US" Publisher="Antoine Aubry" />
-		<DisplayName>YamlDotNetEditor</DisplayName>
-		<Description xml:space="preserve">This is a YAML editor classifier extension to the Visual Studio Editor.</Description>
+		<DisplayName>YAML Editor</DisplayName>
+		<Description xml:space="preserve">Provides a complete YAML editing experience in Visual Studio, including:
+ - Syntax highlightning
+ - Syntax error detection
+ - Comment / uncomment selection
+ - Format document</Description>
 		<License>LICENSE</License>
+		<ReleaseNotes>ReleaseNotes.html</ReleaseNotes>
 		<Icon>icon.png</Icon>
 		<PreviewImage>preview.png</PreviewImage>
 		<Tags>yaml editor</Tags>
