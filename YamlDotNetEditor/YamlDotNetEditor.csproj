@@ -100,12 +100,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandHandlerDispatcher.cs" />
-    <Compile Include="CommandHandlers\TabCommandHandler .cs" />
     <Compile Include="CommandHandlers\FormatDocumentCommandHandler.cs" />
     <Compile Include="CommandHandlers\CommentSelectionCommandHandler.cs" />
     <Compile Include="CommandHandlers\UncommentSelectionCommandHandler.cs" />
     <Compile Include="CommandHandlers\ICommandHandler.cs" />
     <Compile Include="CommandHandlers\SelectionModifierCommandHandler.cs" />
+    <Compile Include="EditorSettingsApplier.cs" />
     <Compile Include="ErrorTagger.cs" />
     <Compile Include="FileAndContentTypeDefinitions.cs" />
     <Compile Include="ErrorTaggerProvider.cs" />

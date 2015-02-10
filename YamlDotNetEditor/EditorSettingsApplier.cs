@@ -19,40 +19,20 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.Text.Editor;
-using Microsoft.VisualStudio.Text.Operations;
-using Microsoft.VisualStudio.TextManager.Interop;
 using Microsoft.VisualStudio.Utilities;
 using System.ComponentModel.Composition;
-using YamlDotNetEditor.CommandHandlers;
 
 namespace YamlDotNetEditor
 {
-	[Export(typeof(IVsTextViewCreationListener))]
+	[Export(typeof(IWpfTextViewCreationListener))]
 	[ContentType("yaml")]
-	[TextViewRole(PredefinedTextViewRoles.Editable)]
-	public sealed class CommandService : IVsTextViewCreationListener
+	[TextViewRole(PredefinedTextViewRoles.Document)]
+	internal class EditorSettingsApplier : IWpfTextViewCreationListener
 	{
-		[Import]
-		internal IVsEditorAdaptersFactoryService EditorAdaptersFactoryService = null; // Set via MEF
-
-		[Import]
-		internal ITextUndoHistoryRegistry TextUndoHistoryRegistry = null; // Set via MEF
-
-		public void VsTextViewCreated(IVsTextView textViewAdapter)
+		public void TextViewCreated(IWpfTextView textView)
 		{
-			ITextView textView = EditorAdaptersFactoryService.GetWpfTextView(textViewAdapter);
-			if (textView == null)
-				return;
-
-			var dispatcher = new CommandHandlerDispatcher(textViewAdapter, textView, TextUndoHistoryRegistry,
-				new CommentSelectionCommandHandler(),
-				new UncommentSelectionCommandHandler(),
-				new FormatDocumentCommandHandler()
-			);
-
-			textView.Properties.AddProperty(typeof(CommandHandlerDispatcher), dispatcher);
+			textView.Options.SetOptionValue<bool>(DefaultOptions.ConvertTabsToSpacesOptionId, true);
 		}
 	}
 }
